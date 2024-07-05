@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { Integrante } from '@/interfaces/apiresults';
 
-const api = axios.create({
-  baseURL: 'http://localhost:8081',
-});
-
-export default api;
+export const getIntegrante = async  (): Promise<Integrante> => {
+    const response = await fetch('https://node-do-zero-jq3a.onrender.com/videos?search=');
+    const json = await response.json();
+    return json;
+}

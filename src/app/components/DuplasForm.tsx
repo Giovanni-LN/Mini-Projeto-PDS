@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import api from '../services/api';
+import React, { useState, useEffect } from "react";
+import { View, TextInput, Button, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useQuery } from "@tanstack/react-query";
+import { getIntegrante } from "@/services/api";
 
 type Integrante = {
   id: number;
@@ -22,24 +23,15 @@ type Props = {
 
 const DuplasForm = ({ onSave }: Props) => {
   const [integrantes, setIntegrantes] = useState<Integrante[]>([]);
-  const [nomeIntegrante, setNomeIntegrante] = useState<string>('');
-  const [responsabilidade, setResponsabilidade] = useState<string>('');
+  const [nomeIntegrante, setNomeIntegrante] = useState<string>("");
+  const [responsabilidade, setResponsabilidade] = useState<string>("");
 
-  useEffect(() => {
-    api.get<Integrante[]>('/integrantes')
-      .then((response) => setIntegrantes(response.data))
-      .catch((error) => console.error(error));
-  }, []);
+  const integranteQuery = useQuery({
+    queryKey: ["integrante"],
+    queryFn: getIntegrante,
+  });
 
-  const handleSubmit = () => {
-    api.post<Dupla>('/duplas', { nomeIntegrante, responsabilidade })
-      .then((response) => {
-        onSave(response.data);
-        setNomeIntegrante('');
-        setResponsabilidade('');
-      })
-      .catch((error) => console.error(error));
-  };
+  const handleSubmit = () => {};
 
   return (
     <View style={styles.form}>
@@ -49,7 +41,11 @@ const DuplasForm = ({ onSave }: Props) => {
       >
         <Picker.Item label="Selecione um Integrante" value="" />
         {integrantes.map((integrante) => (
-          <Picker.Item key={integrante.id} label={integrante.nome} value={integrante.nome} />
+          <Picker.Item
+            key={integrante.id}
+            label={integrante.nome}
+            value={integrante.nome}
+          />
         ))}
       </Picker>
       <TextInput
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     padding: 10,

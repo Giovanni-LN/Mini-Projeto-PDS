@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import api from '../services/api';
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 
 type Dupla = {
   id: number;
@@ -10,12 +9,6 @@ type Dupla = {
 
 const DuplasTable = () => {
   const [duplas, setDuplas] = useState<Dupla[]>([]);
-
-  useEffect(() => {
-    api.get<Dupla[]>('/duplas')
-      .then((response) => setDuplas(response.data))
-      .catch((error) => console.error(error));
-  }, []);
 
   return (
     <View>
@@ -36,11 +29,11 @@ const DuplasTable = () => {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
 });
 

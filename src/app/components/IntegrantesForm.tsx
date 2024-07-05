@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
-import api from '../services/api';
+import React, { useState } from "react";
+import { View, TextInput, Button, StyleSheet } from "react-native";
 
 type Integrante = {
   id: number;
@@ -14,20 +13,11 @@ type Props = {
 };
 
 const IntegrantesForm = ({ onSave }: Props) => {
-  const [nome, setNome] = useState<string>('');
-  const [idade, setIdade] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [nome, setNome] = useState<string>("");
+  const [idade, setIdade] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
-  const handleSubmit = () => {
-    api.post<Integrante>('/integrantes', { nome, idade, email })
-      .then((response) => {
-        onSave(response.data);
-        setNome('');
-        setIdade('');
-        setEmail('');
-      })
-      .catch((error) => console.error(error));
-  };
+  const handleSubmit = () => {};
 
   return (
     <View style={styles.form}>
@@ -60,7 +50,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     padding: 10,
